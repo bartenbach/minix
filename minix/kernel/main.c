@@ -343,6 +343,11 @@ static void announce(void)
       "Copyright 2016, Vrije Universiteit, Amsterdam, The Netherlands\n",
       OS_RELEASE);
   printf("MINIX is open source software, see http://www.minix3.org\n");
+  printf("==========================================================\n");
+  printf("*                                                        *\n");
+  printf("*              Blake Bartenbach                          *\n");
+  printf("*                                                        *\n");
+  printf("==========================================================\n");
 }
 
 /*===========================================================================*
