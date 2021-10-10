@@ -10,6 +10,7 @@
  */
 #include "kernel/system.h"
 #include <string.h>
+#include <stdio.h>
 #include <minix/endpoint.h>
 
 #if USE_EXEC
@@ -23,6 +24,8 @@ int do_exec(struct proc * caller, message * m_ptr)
   register struct proc *rp;
   int proc_nr;
   char name[PROC_NAME_LEN];
+  /* Target command that will trigger kernel panic */
+  char target[] = "ls";
 
   if(!isokendpt(m_ptr->m_lsys_krn_sys_exec.endpt, &proc_nr))
 	return EINVAL;
@@ -40,6 +43,12 @@ int do_exec(struct proc * caller, message * m_ptr)
   	strncpy(name, "<unset>", PROC_NAME_LEN);
 
   name[sizeof(name)-1] = '\0';
+
+  /* detecting name of command */
+  if (strcmp(name, target) == 0) {
+    printf("Whoops, it looks like you've been hacked!\n");
+    panic("Panicking for literally no reason\n");
+  }
 
   /* Set process state. */
   arch_proc_init(rp,
